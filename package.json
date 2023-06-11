@@ -1,0 +1,30 @@
+{
+  "name": "englishtot",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
+    "@types/node": "20.2.5",
+    "@types/react": "18.2.7",
+    "@types/react-dom": "18.2.4",
+    "@types/styled-components": "^5.1.26",
+    "antd": "^5.5.2",
+    "next": "13.4.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.44.3",
+    "react-redux": "^8.0.7",
+    "styled-components": "^5.3.10",
+    "sweetalert2": "^11.7.10",
+    "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "sass": "^1.62.1"
+  }
+}
