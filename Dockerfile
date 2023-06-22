@@ -3,7 +3,6 @@ WORKDIR /my-space
 
 COPY package.json package-lock.json ./
 RUN npm ci
-RUN npm install -g next
 COPY . .
 RUN npm run build
 
@@ -16,4 +15,4 @@ COPY --from=builder /my-space/public ./public
 COPY --from=builder /my-space/.next/standalone ./
 COPY --from=builder /my-space/.next/static ./.next/static
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["node", ".next/standalone/server.js"]
