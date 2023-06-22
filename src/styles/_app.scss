@@ -129,6 +129,7 @@ html,body{
 .bg-label{
     background: linear-gradient(to bottom right, #00C0FF, #4218B8);
     color: white !important;
+    white-space: nowrap;
 }
 .bg-red{
     background: $main_red_color;;
@@ -184,4 +185,22 @@ html,body{
 }
 .bg-black-gradient{
     background: linear-gradient(180.2deg, rgb(30, 33, 48) 6.8%, rgb(74, 98, 110) 131%) !important;
+}
+.bg-blue-gradient{
+    background: linear-gradient(to bottom right, #38A2D7, #561139);
+}
+.bg-insert{
+    background-image: linear-gradient(to bottom right, #FF61D2, #FE9090) !important;
+    color:white !important
+}
+.custom-toolip-inner .ant-tooltip-inner{
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border-radius: 12px;
+}
+.pointer{
+    cursor: pointer;
+}
+.hidden{
+    display: none;
 }

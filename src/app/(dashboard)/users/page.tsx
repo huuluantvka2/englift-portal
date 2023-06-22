@@ -13,9 +13,8 @@ import { Button, Col, Input, Select, Table } from "antd";
 import type { TableProps } from 'antd/es/table';
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Swal from "sweetalert2";
 const User = () => {
-    const columns = [
+    const columns: any = [
         {
             title: 'Email',
             dataIndex: 'email',
@@ -46,7 +45,6 @@ const User = () => {
             dataIndex: 'active',
             width: 200,
             render: (value: boolean) => {
-                console.log(value)
                 return (
                     <ActiveStatus className={value ? 'bg-label' : 'bg-black-gradient'}>{value ? 'Hoạt động' : 'Không hoạt động'}</ActiveStatus>
                 )
@@ -63,6 +61,7 @@ const User = () => {
         },
         {
             width: 100,
+            fixed: 'right',
             render: (value, record) => (
                 <UpdateEditIcon handleDelete={() => handleDelete(record.id)} handleEdit={() => handleEdit(record.id)} />
             ),
@@ -84,7 +83,7 @@ const User = () => {
     const router = useRouter();
     useEffect(() => {
         loadData()
-    }, [filter.limit, filter.page, filter.sort, filter.sort])
+    }, [filter.limit, filter.page, filter.sort])
 
     const loadData = async () => {
         let data: any = await getUsers(filter).unwrap()
@@ -187,7 +186,7 @@ const User = () => {
                 dataSource={users.items}
                 loading={isLoading || isLoadingDelete}
                 onChange={onChange}
-                scroll={{ x: 800 }}
+                scroll={{ x: 1200 }}
                 pagination={{ total: users.totalRecord, showSizeChanger: true, onChange: changePagination, showTotal: () => `Tổng số: ${users.totalRecord}` }}
             />
         </>

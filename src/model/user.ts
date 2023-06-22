@@ -1,3 +1,5 @@
+import { IAudit } from "./common"
+
 export interface UserLogin {
     email: string,
     password: string
@@ -9,7 +11,7 @@ export interface TokenResponse {
     userId: string
 }
 
-export interface UserItem {
+export interface UserItem extends IAudit {
     id: string,
     fullName: string,
     active: boolean,
@@ -19,8 +21,4 @@ export interface UserItem {
     phoneNumber?: string,
     refCode?: string,
     typeLogin: number,
-    createdAt?: string | undefined,
-    createdBy?: string | undefined,
-    updatedAt?: string | undefined,
-    updatedBy?: string | undefined
 }

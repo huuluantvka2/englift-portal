@@ -20,3 +20,10 @@ export interface BaseRequest {
 export interface SingleId {
     id: string
 }
+
+export interface IAudit {
+    createdAt?: string | undefined,
+    createdBy?: string | undefined,
+    updatedAt?: string | undefined,
+    updatedBy?: string | undefined
+}
