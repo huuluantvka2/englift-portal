@@ -3,6 +3,7 @@ WORKDIR /my-space
 
 COPY package.json package-lock.json ./
 RUN npm ci
+RUN npm install -g next
 COPY . .
 RUN npm run build
 
