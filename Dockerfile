@@ -1,4 +1,4 @@
-FROM 18.16.1 as builder
+FROM node:18.16.1 as builder
 WORKDIR /my-space
 
 COPY package.json package-lock.json ./
@@ -6,7 +6,7 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-FROM 18.16.1 as runner
+FROM node:18.16.1 as runner
 WORKDIR /my-space
 COPY --from=builder /my-space/package.json .
 COPY --from=builder /my-space/package-lock.json .
