@@ -11,7 +11,7 @@ import dayjs from 'dayjs'
 import { useEffect, useState } from "react"
 import Swal from "sweetalert2"
 const { Option } = Select;
-export const UserDetail = ({ params }) => {
+const UserDetail = ({ params }) => {
     const [getUserById, { isLoading }] = useGetUserByIdMutation()
     const [updateUserById] = useUpdateUserByIdMutation()
     const [user, setUser] = useState<UserItem | undefined>(undefined)

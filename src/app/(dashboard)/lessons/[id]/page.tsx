@@ -11,7 +11,7 @@ import { Button, Col, DatePicker, Form, Input, Row, Spin, Switch } from "antd"
 import dayjs from 'dayjs'
 import { useEffect, useState } from "react"
 import Swal from "sweetalert2"
-export const LessonDetail = ({ params }) => {
+const LessonDetail = ({ params }) => {
     const [getLessonById, { isLoading }] = useGetLessonByIdMutation()
     const [updateLessonById] = useUpdateLessonByIdMutation()
     const [lesson, setLesson] = useState<LessonItem>()
