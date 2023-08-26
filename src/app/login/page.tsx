@@ -35,7 +35,7 @@ const Login = () => {
         <div className="login bg-primary-black center-all">
             <Card hoverable style={{ position: 'relative', width: 450, height: 'auto' }}>
                 <Image style={{ position: 'absolute', left: '175px', top: '-60px' }} alt='logo' width={100} height={100} src={Logo} />
-                <h1 className='text-center'>Tiếng Hàn Tốt Admin</h1>
+                <h1 className='text-center'>Tiếng Anh Tốt Admin</h1>
                 <Form
                     labelAlign='left'
                     wrapperCol={{ span: 24 }}

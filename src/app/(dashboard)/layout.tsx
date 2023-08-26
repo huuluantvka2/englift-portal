@@ -46,17 +46,17 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         <Layout style={{ minHeight: '100vh' }} hasSider={true}>
             <Sider className="bg-sider" collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
                 <div className="d-flex dashboard-logo">
-                    <Image style={{borderRadius:'100px'}} alt='logo' width={50} height={50} src={Logo} />
+                    <Image alt='logo' width={50} height={50} src={Logo} />
                     {!collapsed && <b>ADMIN</b>}
                 </div>
                 <Menu onClick={handleMenuClick} theme="dark" defaultSelectedKeys={['/users']} mode="inline" items={items} />
             </Sider>
             <Layout style={{ 'background': '#f0f2f5' }}>
-                <Header className="bg-main dashboard-header">TIẾNG HÀN TỐT</Header>
+                <Header className="bg-main dashboard-header">TIẾNG ANH TỐT</Header>
                 <Content style={{ margin: '0 16px' }}>
                     {children}
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>©2023 Tieng Han Tot</Footer>
+                <Footer style={{ textAlign: 'center' }}>©2023 Tieng Anh Tot</Footer>
             </Layout>
         </Layout>
     )
