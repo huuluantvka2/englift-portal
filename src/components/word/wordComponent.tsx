@@ -72,6 +72,11 @@ const WordsComponent = (props: { id?: string }) => {
             width: 300,
         },
         {
+            title: 'Hán Hàn',
+            dataIndex: 'china',
+            width: 300,
+        },
+        {
             title: 'Trạng thái',
             dataIndex: 'active',
             width: 200,
@@ -203,6 +208,7 @@ const WordsComponent = (props: { id?: string }) => {
             phonetic: wordRecord?.phonetic,
             position: wordRecord?.position,
             trans: wordRecord?.trans,
+            china:wordRecord?.china
         })
         setShowModel(true)
     }
@@ -374,23 +380,28 @@ const WordsComponent = (props: { id?: string }) => {
                             </Form.Item>
                         </Col>
                         <Col span={12}>
-                            <Form.Item name="phonetic" label="Phiên âm" rules={[{ required: true, type: 'string' }]}>
-                                <Input placeholder="Nhập phiên âm" />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
                             <Form.Item name="trans" label="Dịch nghĩa" rules={[{ required: true, type: 'string' }]}>
                                 <Input placeholder="Nhập dịch nghĩa" />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item name="position" label="Loại từ" rules={[{ required: true, type: 'string' }]}>
-                                <Input placeholder="Nhập loại từ" />
                             </Form.Item>
                         </Col>
                         <Col span={24}>
                             <Form.Item name="example" label="Ví dụ" rules={[{ required: true, type: 'string' }]}>
                                 <Input placeholder="Nhập ví dụ" />
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item name="phonetic" label="Phiên âm" rules={[{ required: false, type: 'string' }]}>
+                                <Input placeholder="Nhập phiên âm" />
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item name="position" label="Loại từ" rules={[{ required: false, type: 'string' }]}>
+                                <Input placeholder="Nhập loại từ" />
+                            </Form.Item>
+                        </Col>
+                        <Col span={24}>
+                            <Form.Item name="china" label="Hán Hàn" rules={[{ required: false, type: 'string' }]}>
+                                <Input placeholder="Nhập hán hàn" />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
