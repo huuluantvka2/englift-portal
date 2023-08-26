@@ -1,3 +1,2 @@
-//export const BASE_URL = process.env.BASE_URL || 'https://englift.api.canbantot.com/'
-export const BASE_URL = process.env.BASE_URL || 'https://localhost:7228/'
-export const VERSION1 = 'Api/v1'
+export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
+export const VERSION1 = process.env.NEXT_PUBLIC_VERSION1

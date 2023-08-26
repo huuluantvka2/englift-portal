@@ -3,9 +3,7 @@ export const metadata = {
     description: 'Admin Tieng Anh Tot',
 }
 const CoutseLayout = ({ children }: { children: React.ReactNode }) => {
-    return (
-        <div className="layout-content">{children}</div>
-    )
+    return <>{children}</>
 }
 
 export default CoutseLayout

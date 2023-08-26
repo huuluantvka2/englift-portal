@@ -13,6 +13,7 @@ export const ActiveStatus = styled.span`
     padding: 8px 16px;
     color: #ffffff;
     border-radius: 12px;
+    white-space:nowrap !important;
 `
 export const HeaderPageWrapper = styled(Row)`
     padding-bottom: 20px;

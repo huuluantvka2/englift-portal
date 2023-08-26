@@ -1,7 +1,7 @@
 export const validateMessages = {
-    required: '${label} is required!',
+    required: 'Vui lòng điền ${label}',
     types: {
-        email: '${label} is not a valid email!',
+        email: 'Email không hợp lệ',
         number: '${label} is not a valid number!',
     },
     number: {

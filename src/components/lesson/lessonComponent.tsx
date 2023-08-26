@@ -3,8 +3,8 @@ import UpdateEditIcon from "@/components/updateEditIcon";
 import UploadImage from "@/components/uploadImage";
 import { PaginationData } from "@/model/common";
 import { CommonModels } from "@/model/constants";
-import { CourseCreateUpdate, CourseItem } from "@/model/course";
-import { useCreateCourseMutation, useDeleteCourseMutation, useGetCoursesMutation } from "@/redux/services/courseApi";
+import { LessonCreate, LessonItem } from "@/model/lesson";
+import { useCreateLessonMutation, useDeleteLessonMutation, useGetLessonsMutation } from "@/redux/services/lessonApi";
 import { ActiveStatus, ContentWrapper, HeaderPageWrapper } from "@/styles/UI/styled";
 import { StatusOption } from "@/utils/common";
 import { BASE_URL } from "@/utils/constants";
@@ -16,8 +16,8 @@ import { Avatar, Button, Col, Form, Input, Modal, Row, Select, Switch, Table, To
 import type { TableProps } from 'antd/es/table';
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import NoImage from '../../../public/image/noImage.png';
-const Course = () => {
+import NoImage from '../../public/image/noImage.png';
+const LessonsComponent = (props: { id: string }) => {
     const columns: any = [
         {
             title: 'Hình ảnh',
@@ -31,7 +31,7 @@ const Course = () => {
             }
         },
         {
-            title: 'Tên khóa học',
+            title: 'Tên bài học',
             dataIndex: 'name',
             sorter: true,
             width: 300,
@@ -41,6 +41,11 @@ const Course = () => {
             title: 'Độ ưu tiên',
             dataIndex: 'prior',
             sorter: true,
+            width: 170,
+        },
+        {
+            title: 'Tác giả',
+            dataIndex: 'author',
             width: 150,
         },
         {
@@ -49,8 +54,8 @@ const Course = () => {
             width: 300,
         },
         {
-            title: 'Tổng bài học',
-            dataIndex: 'totalLesson',
+            title: 'Tổng từ vựng',
+            dataIndex: 'totalWords',
             width: 170,
             sorter: true,
         },
@@ -90,7 +95,7 @@ const Course = () => {
             ),
         },
     ];
-    const [courses, setCourses] = useState<PaginationData<CourseItem>>({ items: [], totalRecord: 0 })
+    const [lessons, setLessons] = useState<PaginationData<LessonItem>>({ items: [], totalRecord: 0 })
     const [filter, setFilter] = useState({
         limit: 10,
         page: 1,
@@ -99,10 +104,10 @@ const Course = () => {
         active: null,
     })
     const [showModel, setShowModel] = useState<boolean>(false)
-    const [getCourses, { isLoading }] = useGetCoursesMutation()
-    const [createCourse, { isLoading: isLoadingCreate }] = useCreateCourseMutation()
-    const [deleteCourse, { isLoading: isLoadingDelete }] = useDeleteCourseMutation()
-    const [form] = Form.useForm();
+    const [getLessons, { isLoading }] = useGetLessonsMutation()
+    const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
+    const [deleteLesson, { isLoading: isLoadingDelete }] = useDeleteLessonMutation()
+    const [form] = Form.useForm<LessonCreate>();
 
     const router = useRouter();
     useEffect(() => {
@@ -110,10 +115,9 @@ const Course = () => {
     }, [filter.limit, filter.page, filter.sort])
 
     const loadData = async () => {
-        console.log(filter)
-        let data: any = await getCourses(filter).unwrap()
+        let data: any = await getLessons({ id: props.id, query: filter }).unwrap()
         if (data.success) {
-            setCourses(data.data)
+            setLessons(data.data)
         } else showMessage('error', data.message)
     }
 
@@ -142,11 +146,11 @@ const Course = () => {
         if (e.keyCode === 13) loadData()
     }
 
-    const onChange: TableProps<CourseItem>['onChange'] = (pagination, filters, sorter: any, extra) => {
+    const onChange: TableProps<LessonItem>['onChange'] = (pagination, filters, sorter: any, extra) => {
         if (extra.action === 'sort') {
             let sort = null
-            if (sorter.order === 'ascend') sort = CommonModels.courseOrder[`${sorter.field}AZ`]
-            else if (sorter.order === 'descend') sort = CommonModels.courseOrder[`${sorter.field}ZA`]
+            if (sorter.order === 'ascend') sort = CommonModels.lessonOrder[`${sorter.field}AZ`]
+            else if (sorter.order === 'descend') sort = CommonModels.lessonOrder[`${sorter.field}ZA`]
             setFilter((prev) => {
                 return {
                     ...prev,
@@ -158,10 +162,10 @@ const Course = () => {
 
     //#region handle action
     const handleDelete = (id) => {
-        showSwalModal('Xóa khóa học', 'Bạn có chắn chắn muốn xóa khóa học này?', 'question').then(async res => {
+        showSwalModal('Xóa bài học', 'Bạn có chắn chắn muốn xóa bài học này?', 'question').then(async res => {
             if (res.isConfirmed === true) {
                 try {
-                    const result = await deleteCourse(id).unwrap()
+                    const result = await deleteLesson(id).unwrap()
                     if (result.success) {
                         showSwalMessage('Xóa bản ghi', 'Xóa bản ghi thành công', 'success')
                         loadData()
@@ -175,7 +179,7 @@ const Course = () => {
     }
 
     const handleEdit = (id) => {
-        router.push(`/courses/${id}`)
+        router.push(`/lessons/${id}`)
     }
 
     const handleCloseModal = () => {
@@ -187,23 +191,24 @@ const Course = () => {
     const handleChangeImage = (url: string) => {
         form.setFieldValue('image', url)
     }
-    const handleAddNewCourse = async (values: CourseCreateUpdate) => {
-        const result = await createCourse(values).unwrap()
+    const handleAddNewLesson = async (values: LessonCreate) => {
+        values.courseId = props.id
+        const result = await createLesson(values).unwrap()
         if (result.success) {
             setShowModel(false)
             form.resetFields()
-            showSwalMessage('Thêm mới', 'Thêm mới khóa học thành công', 'success')
+            showSwalMessage('Thêm mới', 'Thêm mới bài học thành công', 'success')
             loadData()
         }
-        else showSwalMessage('Thêm mới', 'Thêm mới khóa học thất bại', 'error')
+        else showSwalMessage('Thêm mới', 'Thêm mới bài học thất bại', 'error')
     }
     //#region upload image
     return (
         <ContentWrapper>
             <HeaderPageWrapper>
-                <Col className="d-flex justify-start align-center" span={4}><h2 className="header-title">Khóa học</h2></Col>
+                <Col className="d-flex justify-start align-center" span={4}><h2 className="header-title">Bài học</h2></Col>
                 <Col span={20} className="text-align-right">
-                    <Input onKeyDown={keyPress} value={filter.search} onChange={changeSearch} className="my-2" style={{ width: 300 }} placeholder="Tìm kiếm theo tên khóa học" />
+                    <Input onKeyDown={keyPress} value={filter.search} onChange={changeSearch} className="my-2" style={{ width: 300 }} placeholder="Tìm kiếm theo tên bài học" />
                     <Select
                         defaultValue={'--'}
                         placeholder="Trạng thái"
@@ -220,14 +225,14 @@ const Course = () => {
                 showSorterTooltip={false}
                 rowKey={'id'}
                 columns={columns}
-                dataSource={courses.items}
+                dataSource={lessons.items}
                 loading={isLoading || isLoadingDelete}
                 onChange={onChange}
-                scroll={{ x: 1200 }}
-                pagination={{ total: courses.totalRecord, showSizeChanger: true, onChange: changePagination, showTotal: () => `Tổng số: ${courses.totalRecord}` }}
+                scroll={{ x: 1500 }}
+                pagination={{ total: lessons.totalRecord, showSizeChanger: true, onChange: changePagination, showTotal: () => `Tổng số: ${lessons.totalRecord}` }}
             />
             <Modal
-                title="Tạo khóa học"
+                title="Tạo bài học"
                 open={showModel}
                 onCancel={handleCloseModal}
                 footer={null}
@@ -238,13 +243,16 @@ const Course = () => {
                     wrapperCol={{ span: 24 }}
                     labelCol={{ span: 24 }}
                     name="nest-messages"
-                    onFinish={handleAddNewCourse}
+                    onFinish={handleAddNewLesson}
                     initialValues={{ active: true, prior: 1 }}
                     style={{ maxWidth: 600 }}
                     form={form}
                     validateMessages={validateMessages}
                 >
-                    <Form.Item name="name" label="Tên khóa học" rules={[{ required: true, type: 'string' }]}>
+                    <Form.Item name="name" label="Tên bài học" rules={[{ required: true, type: 'string' }]}>
+                        <Input />
+                    </Form.Item>
+                    <Form.Item name="author" label="Tác giả">
                         <Input />
                     </Form.Item>
                     <Form.Item name="prior" label="Độ ưu tiên" rules={[{ required: true }]}>
@@ -256,7 +264,7 @@ const Course = () => {
                     <Row>
                         <Col span={12}>
                             <Form.Item name="image" label="Hình ảnh">
-                                <UploadImage oldImage="" type={1} handleChangeImage={handleChangeImage} />
+                                <UploadImage oldImage="" type={2} handleChangeImage={handleChangeImage} />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -274,4 +282,4 @@ const Course = () => {
 
     )
 }
-export default Course
+export default LessonsComponent

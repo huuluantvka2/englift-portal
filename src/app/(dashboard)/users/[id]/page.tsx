@@ -11,7 +11,7 @@ import dayjs from 'dayjs'
 import { useEffect, useState } from "react"
 import Swal from "sweetalert2"
 const { Option } = Select;
-export const UserDetail = ({ params }) => {
+const UserDetail = ({ params }) => {
     const [getUserById, { isLoading }] = useGetUserByIdMutation()
     const [updateUserById] = useUpdateUserByIdMutation()
     const [user, setUser] = useState<UserItem | undefined>(undefined)
@@ -115,13 +115,13 @@ export const UserDetail = ({ params }) => {
 
                         <Col span={6} className="mb-2">
                             <Form.Item label="Ngày tạo">
-                                <DatePicker defaultValue={dayjs(formatDateString(user.createdAt as string))} disabled placeholder="Ngày tạo" style={{ width: '100%' }} />
+                                <DatePicker defaultValue={dayjs(user.createdAt)} disabled placeholder="Ngày tạo" style={{ width: '100%' }} />
                             </Form.Item>
                         </Col>
 
                         <Col span={6} className="mb-2">
                             <Form.Item label="Ngày cập nhật">
-                                <DatePicker disabled placeholder="Ngày cập nhật" style={{ width: '100%' }} />
+                                <DatePicker defaultValue={dayjs(user.updatedAt)} disabled placeholder="Ngày cập nhật" style={{ width: '100%' }} />
                             </Form.Item>
                         </Col>
 

@@ -3,7 +3,7 @@ import Swal, { SweetAlertIcon, SweetAlertResult } from "sweetalert2"
 export const generateRequest = (obj: Object) => {
     let str = '?'
     for (let [key, value] of Object.entries(obj)) {
-        if (value) str += `${key}=${value}&`
+        if (value != null && value != undefined) str += `${key}=${value}&`
     }
     if (str.length > 1) return str.substring(0, str.length - 1)
     else return ""
